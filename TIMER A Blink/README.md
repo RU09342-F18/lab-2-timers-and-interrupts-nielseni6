@@ -1,4 +1,9 @@
-# Button Interrupt
+# Timer A Blink (Timer B Blink on MSP430FR2311)
+
+## Boards Used
+
+  -MSP430G2553
+  -MSP430FR2311
 
 ## Functionality
 
