@@ -2,9 +2,8 @@
 
 ## Boards Used
 
-  -MSP430G2553
-  
-  -MSP430FR2311
+  *MSP430G2553
+  *MSP430FR2311
 
 ## Functionality
 
