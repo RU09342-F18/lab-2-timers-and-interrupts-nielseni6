@@ -1,10 +1,5 @@
 #include <msp430.h>
 
-volatile unsigned int time1 = 0;                // used to record timer at button press
-volatile unsigned int time2 = 1000;             // used to record timer at button release
-volatile unsigned int cycle1 = 0;               // used to record cycle number at button press
-volatile unsigned int cycle2 = 0;               // used to record cycle number at button release
-volatile unsigned int cycleCount = 0;           // used to count every cycle of the timer in up mode
 volatile unsigned int x = 0;                    // used to keep track of button press up/down
 
 int main(void)
@@ -30,15 +25,14 @@ __interrupt void Port_1(void)
     P1IFG &= ~BIT3;                             // P1.3 IFG cleared
     if(!x)                                      // true when button is pressed
     {
-        time1 = TA0R;                           // record timer at button press
-        cycle1 = cycleCount;                    // record cycle number at button press
+        TACTL = TACLR;                          // clears the clock
+        TACTL = TASSEL_1 + MC_2;                // BCLK set to continuous
     }
     else                                        // else when button is released
     {
-        time2 = TA0R;                           // record timer at button release
-        cycle2 = cycleCount;                    // record cycle number at button release
-        TA0CCR0 = ((time2 + ((cycle2 - cycle1)*TA0CCR0)) - time1);  // set CCR0 = dT + (dCycles * (Current CCR0))
-    }                                           // dT = Duration of Button Press : d = Delta
+        TACCR0 = TA0R;                          // Clock set to time since button press
+        TACTL = TASSEL_1 + MC_1;                // BCLK set to up
+    }
     P1IES ^= BIT3;                              // Toggle High/low edge
     x ^= 1;                                     // Toggle x to keep track of button up/down
 }
@@ -47,5 +41,4 @@ __interrupt void Port_1(void)
 __interrupt void Timer_A(void)
 {
     P1OUT ^= BIT0;                              // P1.0 LED toggle
-    cycleCount++;                               // Counts Number timer cycles since start
 }
