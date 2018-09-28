@@ -26,12 +26,12 @@ __interrupt void Port_1(void)
     if(!x)                                      // true when button is pressed
     {
         TACTL = TACLR;                          // clears the clock
-        TACTL = TASSEL_1 + MC_2;                // BCLK set to continuous
+        TACTL = TASSEL_1 + MC_2 + ID_3;         // BCLK set to continuous and divided by 8
     }
     else                                        // else when button is released
     {
         TACCR0 = TA0R;                          // Clock set to time since button press
-        TACTL = TASSEL_1 + MC_1;                // BCLK set to up
+        TACTL = TASSEL_1 + MC_1 + ID_3;         // BCLK set to up and divided by 8
     }
     P1IES ^= BIT3;                              // Toggle High/low edge
     x ^= 1;                                     // Toggle x to keep track of button up/down
