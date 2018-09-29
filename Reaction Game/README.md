@@ -1,5 +1,8 @@
-# (Optional) Reaction Game
-On to the sort of optional part of the lab. I only say "sort of" because I really think that you should try to implement a game just to not only have a little fun with the class, but also start thinking about what behaviors you want your system to exhibit. Below are only a few recommendations I can think of, but if you want, please show me your creative side and think of another game to implement.
+# Reaction Game
+
+## Board Used
+
+* MSP430F2311
 
 ## Task
 The final part of this lab is to generate a game using buttons, timers, and LEDS that is meant to be played with let's say 2+ players. Your game does not have to be complicated, however, I think it would be kind of cool as people start making these games that we can test them out in lab. Along with some awesome documentation to explain how to play your game, you need to also demonstrate to your Professor and/or the Lab Instructor that your game actually works to get credit for this part of the lab. The reason we want to see it in person is A) so we can bask in the glory that is your game, and B) so we can get a good look at the game and see what you have implemented from the lab exercises so far. This is not meant to be a "Grill session" where we rake you over the coals about every single line of code, but we are probably going to ask a few questions just to get an idea for the different ways people are implementing these game ideas.
