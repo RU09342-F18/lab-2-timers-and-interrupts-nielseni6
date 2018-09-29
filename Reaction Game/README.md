@@ -2,17 +2,12 @@
 
 ## Board Used
 
-* MSP430F2311
+* MSP430F5529
 
-## Task
-The final part of this lab is to generate a game using buttons, timers, and LEDS that is meant to be played with let's say 2+ players. Your game does not have to be complicated, however, I think it would be kind of cool as people start making these games that we can test them out in lab. Along with some awesome documentation to explain how to play your game, you need to also demonstrate to your Professor and/or the Lab Instructor that your game actually works to get credit for this part of the lab. The reason we want to see it in person is A) so we can bask in the glory that is your game, and B) so we can get a good look at the game and see what you have implemented from the lab exercises so far. This is not meant to be a "Grill session" where we rake you over the coals about every single line of code, but we are probably going to ask a few questions just to get an idea for the different ways people are implementing these game ideas.
+## Rules of The Game/Functionality
 
-## "But what processor should I be doing this on?"
-Since this is technically an optional part of the lab, we are not going to force you into picking just one processor or make you do it for them all. What I personally would love to see is people using boards like the FR6989 or F5529 and take advantage of a ton of I/O to maybe do something interesting with LED displays or multiple inputs.
+When the program starts both players should be ready with their fingers on the button. Both the green and the red LED start in the off state. The players then need to wait for both LEDs to turn on. The LEDs should turn on after around  The person who presses the button fastest wins the round and the LED on their side stays on while the other LED turns off. If a player presses their button before the LEDs turn on they lose the round and the other player's LED turns on. Then the next round then starts and the players wait until both LEDs turn back on.
 
-### Game Ideas
-#### Reaction
-This would be a 2 player game where your two players after resetting the processor press their buttons to initialize the game. After at least 5 seconds, one of the LEDs should turn on and your processor then has to determine who was the first person to press the button. The winner could be indicated by blinking particular LEDs. Once you get the core functionality working, you should also add false start protection so players who press the button too early are automatically disqualified.
+## Explination
 
-#### Rapid Pressing
-The object of this 2 player game would be to see who can press their button the fastest up to an arbitrary number of times, for example 50 times. Upon your processor starting up, each player should hold their button down to indicate the start of the game. From that point the LEDs could blink 3 times and after that, both players begin pressing the buttons as fast as possible. First player to the number of button presses wins and can be indicated by flashing LEDs. Remember! Since you are counting the number of times a button is pressed, you need to make sure that you are debouncing properly to ensure there is no inadvertent cheating.
+This program begins by stopping the watchdog timer. After this the red and green LEDs at P1.1 and P4.7 are set to output. Next the button interrupts for the buttons at P1.1 and P2.1 are initiated. Next the timer is set to ACLK and set to up. After this the interrupt is set and CCR0 is set to the max value that it can be set to. When the timer interrupt occurs there is an if statement that checks how many timer cycles have occured. If 8 timer cyles have occured then the LEDs turn on. When the button interrupts are enabled they check whether the LED is on. If the LED is on then the win condition is enabled, if not the opposite player's win condition is enabled. There are also two debounces for the button in each of the button interrupts. The first interrupt uses a for loop a delay that fixes the bounce for the down press. The second debounce is to fix the bounce that occurs when you let go of the button. That debounce works by toggling the hi/lo edge of the interrupt and also using an if statement that checks which hi/lo edge is set so that the code only runs when the button is depressed. I do not want the win state to be enabled when the button is released so this is necessary. Comments in the code show specifics.
